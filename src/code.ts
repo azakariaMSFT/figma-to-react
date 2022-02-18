@@ -74,4 +74,7 @@ figma.ui.onmessage = (msg: messageTypes) => {
     figma.clientStorage.setAsync(STORAGE_KEYS.USER_COMPONENT_SETTINGS_KEY, msg.userComponentSettings)
     generate(selectedNodes[0], {})
   }
+  if (msg.type === 'regen') {
+    generate(figma.currentPage.selection[0], {})
+  }
 }

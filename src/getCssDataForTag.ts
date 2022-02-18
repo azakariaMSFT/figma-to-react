@@ -134,7 +134,31 @@ export function getCssDataForTag(node: SceneNode, unitType: UnitType, textCount:
       properties.push({ name: 'text-align', value: textAlignCssValues[node.textAlignHorizontal] })
       properties.push({ name: 'vertical-align', value: textVerticalAlignCssValues[node.textAlignVertical] })
       properties.push({ name: 'font-size', value: `${node.fontSize as number}px` })
-      properties.push({ name: 'font-family', value: (node.fontName as FontName).family })
+
+      if(node.fontName !== figma.mixed)
+      {
+        const font: FontName= node.fontName;
+        let fontName = font.family;
+          if(font.style=== "Semibold")
+          {
+            fontName = fontName +" Semibold";
+          }
+        properties.push({ name: 'font-family', value: (node.fontName as FontName).family })
+      }
+      else
+      {
+        const length = node.characters.length;
+        const fonts = node.getRangeAllFontNames(0,length-1);
+        if(fonts.length>0)
+        {
+          let fontName = fonts[0].family;
+          if(fonts[0].style=== "Semibold")
+          {
+            fontName = fontName +" Semibold";
+          }
+          properties.push({ name: 'font-family', value: fontName })
+        }
+      }
 
       const letterSpacing = node.letterSpacing as LetterSpacing
       if (letterSpacing.value !== 0) {

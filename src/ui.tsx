@@ -66,6 +66,11 @@ const App: React.VFC = () => {
       parent.postMessage(msg, '*')
     }
   }
+  const onRegen = () => {
+     const msg: messageTypes = { type: 'regen' }
+      parent.postMessage({pluginMessage:msg}, '*')
+    
+  }
 
   const notifyChangeCssStyle = (event: React.ChangeEvent<HTMLInputElement>) => {
     const msg: messageTypes = { type: 'new-css-style-set', cssStyle: event.target.value as CssStyle }
@@ -120,6 +125,11 @@ const App: React.VFC = () => {
         <div className={styles.buttonLayout}>
           <button className={styles.copyButton} onClick={copyToClipboard}>
             Copy to clipboard
+          </button>
+        </div>
+        <div className={styles.buttonLayout}>
+          <button className={styles.copyButton} onClick={onRegen}>
+            regen
           </button>
         </div>
       </div>
