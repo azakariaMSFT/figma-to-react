@@ -51,7 +51,7 @@ const textDecorationCssValues = {
   STRIKETHROUGH: 'line-through'
 }
 
-export function getCssDataForTag(node: SceneNode, unitType: UnitType, textCount: TextCount): CSSData {
+export function getCssDataForTag(node: SceneNode, unitType: UnitType, textCount: TextCount, textStartIndex : number): CSSData {
   const properties: CSSData['properties'] = []
 
   // skip vector since it's often displayed as an img tag
@@ -143,22 +143,24 @@ export function getCssDataForTag(node: SceneNode, unitType: UnitType, textCount:
           {
             fontName = fontName +" Semibold";
           }
-        properties.push({ name: 'font-family', value: (node.fontName as FontName).family })
+        properties.push({ name: 'font-family', value: fontName })
       }
-      else
-      {
-        const length = node.characters.length;
-        const fonts = node.getRangeAllFontNames(0,length-1);
-        if(fonts.length>0)
-        {
-          let fontName = fonts[0].family;
-          if(fonts[0].style=== "Semibold")
-          {
-            fontName = fontName +" Semibold";
-          }
-          properties.push({ name: 'font-family', value: fontName })
-        }
-      }
+      //  else
+      //  {
+      //    if(node!=undefined)
+      //    {
+      //     const fonts = (node as any).getRangeAllFontNames(textStartIndex,textStartIndex+1);
+      //    if(fonts.length>0)
+      //    {
+      //      let fontName = fonts[0].family;
+      //      if(fonts[0].style=== "Semibold")
+      //      {
+      //         fontName = fontName +" Semibold";
+      //      }
+      //      properties.push({ name: 'font-family', value: fontName })
+      //    }
+      //   }
+      //  }
 
       const letterSpacing = node.letterSpacing as LetterSpacing
       if (letterSpacing.value !== 0) {
