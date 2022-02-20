@@ -116,6 +116,7 @@ const App: React.VFC = () => {
 
   // set initial values taken from figma storage
   React.useEffect(() => {
+    setGeneratedCode(`<div></div>`);
     onmessage = (event) => {
       setCssStyle(event.data.pluginMessage.cssStyle)
       setUnitType(event.data.pluginMessage.unitType)
