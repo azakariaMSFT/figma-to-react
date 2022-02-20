@@ -95,6 +95,13 @@ export function getCssDataForTag(node: SceneNode, unitType: UnitType, textCount:
         if (node.primaryAxisAlignItems !== 'SPACE_BETWEEN' && node.itemSpacing > 0) {
           properties.push({ name: 'gap', value: buildSizeStringByUnit(node.itemSpacing, unitType) })
         }
+        if((node as BaseFrameMixin).layoutMode === "VERTICAL")
+        {
+          if((node as BaseFrameMixin).counterAxisSizingMode === "FIXED")
+          {
+            properties.push({ name: 'width', value: node.width.toString() + 'px' })
+          }
+        }
       } else {
         properties.push({ name: 'height', value: Math.floor(node.height) + 'px' })
         properties.push({ name: 'width', value: Math.floor(node.width) + 'px' })
@@ -209,7 +216,8 @@ export function getCssDataForTag(node: SceneNode, unitType: UnitType, textCount:
   }
 
   if (properties.length > 0) {
-    let className = node.name
+    let className = node.name.replaceAll('.', ``);
+    
 
     if (isImageNode(node)) {
       className = 'img' + textCount.count

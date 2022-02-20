@@ -87,9 +87,7 @@ function buildJsxString(tag: Tag, cssStyle: CssStyle, level: number) {
 }
 
 export function buildCode(tag: Tag, css: CssStyle): string {
-  return `const ${capitalizeFirstLetter(tag.name.replace(/\s/g, ''))}: React.VFC = () => {
-  return (
+  return `
 ${buildJsxString(tag, css, 0)}
-  )
-}`
+  `
 }

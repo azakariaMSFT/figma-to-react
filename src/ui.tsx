@@ -1,6 +1,13 @@
 import * as React from 'react'
 import * as ReactDom from 'react-dom'
 
+import { FontWeights, IStackStyles, IStackTokens, ITextStyles, Link, Stack, Text } from '@fluentui/react';
+import {
+  LiveError,
+  LivePreview,
+  LiveProvider
+} from 'react-live';
+
 import { CssStyle } from './buildCssString'
 import Spacer from './ui/Spacer'
 import { UnitType } from './buildSizeStringByUnit'
@@ -58,8 +65,8 @@ const App: React.VFC = () => {
   const [userComponentSettings, setUserComponentSettings] = React.useState<UserComponentSetting[]>([])
   const textRef = React.useRef<HTMLTextAreaElement>(null)
 
-  //const [generatedCode, setGeneratedCode] = React.useState('')
-  //const [generatedCSS, setGeneratedCSS] = React.useState('')
+  const [generatedCode, setGeneratedCode] = React.useState('')
+  const [generatedCSS, setGeneratedCSS] = React.useState('')
   
   const copyToClipboard = () => {
     if (textRef.current) {
@@ -113,21 +120,16 @@ const App: React.VFC = () => {
       setCssStyle(event.data.pluginMessage.cssStyle)
       setUnitType(event.data.pluginMessage.unitType)
       
-      //setGeneratedCode(event.data.pluginMessage.generatedCodeStr);
-      //setGeneratedCSS(event.data.pluginMessage.cssString);
+      setGeneratedCode(event.data.pluginMessage.generatedCodeStr);
+      setGeneratedCSS(event.data.pluginMessage.cssString);
       const codeStr = event.data.pluginMessage.generatedCodeStr + '\n\n' + event.data.pluginMessage.cssString;
       setCode(codeStr);
       setUserComponentSettings(event.data.pluginMessage.userComponentSettings)
     }
   }, [])
 
-  // const srcDoc = `
-  //   <html>
-  //     <body>${html}</body>
-  //     <style>${css}</style>
-  //     <script>${js}</script>
-  //   </html>
-  // `
+  const scope = {Text};
+
   return (
     <div>
       <div className={styles.code}>
@@ -182,14 +184,13 @@ const App: React.VFC = () => {
           onUpdate={onUpdateUserComponentSetting}
         />
         <div className="pane">
-        {/* <iframe
-          srcDoc={srcDoc}
-          title="output"
-          sandbox="allow-scripts"
-          frameBorder="0"
-          width="100%"
-          height="100%"
-        /> */}
+        <style>
+     {generatedCSS}
+     </style>
+        <LiveProvider code={generatedCode} scope={scope}>
+      <LiveError /> 
+      <LivePreview />
+    </LiveProvider> 
       </div>
       </div>
     </div>

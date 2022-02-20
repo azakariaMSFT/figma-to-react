@@ -42,7 +42,7 @@ async function generate(node: SceneNode, config: { cssStyle?: CssStyle; unitType
     return
   }
 
-  const tag = originalTagTree;//await modifyTreeForComponent(originalTagTree, figma)
+  const tag = await modifyTreeForComponent(originalTagTree, figma)
   const generatedCodeStr = buildCode(tag, cssStyle)
   const cssString = buildCssString(tag, cssStyle)
 
