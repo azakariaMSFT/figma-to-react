@@ -1,6 +1,6 @@
-import { capitalizeFirstLetter } from './utils/stringUtils'
 import { Tag } from './buildTagTree'
 import { buildClassName } from './utils/cssUtils'
+import { capitalizeFirstLetter } from './utils/stringUtils'
 
 type CssStyle = 'css' | 'styled-components'
 
@@ -37,7 +37,7 @@ function getTagName(tag: Tag, cssStyle: CssStyle) {
       return 'img'
     }
     if (tag.isText) {
-      return 'p'
+      return 'Text'
     }
     return guessTagName(tag.name)
   }

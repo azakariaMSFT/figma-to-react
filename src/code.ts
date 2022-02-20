@@ -1,12 +1,13 @@
+import { CssStyle, buildCssString } from './buildCssString'
+
 import { STORAGE_KEYS } from './storageKeys'
-import { messageTypes } from './messagesTypes'
+import { TextCount } from './getCssDataForTag'
 import { UnitType } from './buildSizeStringByUnit'
-import { modifyTreeForComponent } from './modifyTreeForComponent'
+import { UserComponentSetting } from './userComponentSetting'
 import { buildCode } from './buildCode'
 import { buildTagTree } from './buildTagTree'
-import { buildCssString, CssStyle } from './buildCssString'
-import { UserComponentSetting } from './userComponentSetting'
-import { TextCount } from './getCssDataForTag'
+import { messageTypes } from './messagesTypes'
+import { modifyTreeForComponent } from './modifyTreeForComponent'
 
 figma.showUI(__html__, { width: 480, height: 480 })
 
@@ -41,7 +42,7 @@ async function generate(node: SceneNode, config: { cssStyle?: CssStyle; unitType
     return
   }
 
-  const tag = await modifyTreeForComponent(originalTagTree, figma)
+  const tag = originalTagTree;//await modifyTreeForComponent(originalTagTree, figma)
   const generatedCodeStr = buildCode(tag, cssStyle)
   const cssString = buildCssString(tag, cssStyle)
 
@@ -55,7 +56,7 @@ if (selectedNodes.length > 1) {
   figma.notify('Please select a node')
   figma.closePlugin()
 } else {
-  generate(selectedNodes[0], {})
+  //generate(selectedNodes[0], {})
 }
 
 figma.ui.onmessage = (msg: messageTypes) => {

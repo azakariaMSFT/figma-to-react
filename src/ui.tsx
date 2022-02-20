@@ -1,12 +1,13 @@
 import * as React from 'react'
 import * as ReactDom from 'react-dom'
+
 import { CssStyle } from './buildCssString'
+import Spacer from './ui/Spacer'
 import { UnitType } from './buildSizeStringByUnit'
+import { UserComponentSetting } from './userComponentSetting'
+import UserComponentSettingList from './ui/UserComponentSettingList'
 import { messageTypes } from './messagesTypes'
 import styles from './ui.css'
-import Spacer from './ui/Spacer'
-import UserComponentSettingList from './ui/UserComponentSettingList'
-import { UserComponentSetting } from './userComponentSetting'
 
 function escapeHtml(str: string) {
   str = str.replace(/&/g, '&amp;')
@@ -57,6 +58,9 @@ const App: React.VFC = () => {
   const [userComponentSettings, setUserComponentSettings] = React.useState<UserComponentSetting[]>([])
   const textRef = React.useRef<HTMLTextAreaElement>(null)
 
+  //const [generatedCode, setGeneratedCode] = React.useState('')
+  //const [generatedCSS, setGeneratedCSS] = React.useState('')
+  
   const copyToClipboard = () => {
     if (textRef.current) {
       textRef.current.select()
@@ -108,12 +112,22 @@ const App: React.VFC = () => {
     onmessage = (event) => {
       setCssStyle(event.data.pluginMessage.cssStyle)
       setUnitType(event.data.pluginMessage.unitType)
-      const codeStr = event.data.pluginMessage.generatedCodeStr + '\n\n' + event.data.pluginMessage.cssString
-      setCode(codeStr)
+      
+      //setGeneratedCode(event.data.pluginMessage.generatedCodeStr);
+      //setGeneratedCSS(event.data.pluginMessage.cssString);
+      const codeStr = event.data.pluginMessage.generatedCodeStr + '\n\n' + event.data.pluginMessage.cssString;
+      setCode(codeStr);
       setUserComponentSettings(event.data.pluginMessage.userComponentSettings)
     }
   }, [])
 
+  // const srcDoc = `
+  //   <html>
+  //     <body>${html}</body>
+  //     <style>${css}</style>
+  //     <script>${js}</script>
+  //   </html>
+  // `
   return (
     <div>
       <div className={styles.code}>
@@ -167,6 +181,16 @@ const App: React.VFC = () => {
           onDelete={onDeleteUserComponentSetting}
           onUpdate={onUpdateUserComponentSetting}
         />
+        <div className="pane">
+        {/* <iframe
+          srcDoc={srcDoc}
+          title="output"
+          sandbox="allow-scripts"
+          frameBorder="0"
+          width="100%"
+          height="100%"
+        /> */}
+      </div>
       </div>
     </div>
   )

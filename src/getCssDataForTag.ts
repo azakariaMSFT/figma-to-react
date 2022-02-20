@@ -1,4 +1,5 @@
-import { buildSizeStringByUnit, UnitType } from './buildSizeStringByUnit'
+import { UnitType, buildSizeStringByUnit } from './buildSizeStringByUnit'
+
 import { isImageNode } from './utils/isImageNode'
 
 export type CSSData = {
@@ -145,22 +146,22 @@ export function getCssDataForTag(node: SceneNode, unitType: UnitType, textCount:
           }
         properties.push({ name: 'font-family', value: fontName })
       }
-      //  else
-      //  {
-      //    if(node!=undefined)
-      //    {
-      //     const fonts = (node as any).getRangeAllFontNames(textStartIndex,textStartIndex+1);
-      //    if(fonts.length>0)
-      //    {
-      //      let fontName = fonts[0].family;
-      //      if(fonts[0].style=== "Semibold")
-      //      {
-      //         fontName = fontName +" Semibold";
-      //      }
-      //      properties.push({ name: 'font-family', value: fontName })
-      //    }
-      //   }
-      //  }
+       else
+       {
+         if(node!=undefined)
+         {
+          const fonts = (node as any).getRangeAllFontNames(textStartIndex,textStartIndex+1);
+         if(fonts.length>0)
+         {
+           let fontName = fonts[0].family;
+           if(fonts[0].style=== "Semibold")
+           {
+              fontName = fontName +" Semibold";
+           }
+           properties.push({ name: 'font-family', value: fontName })
+         }
+        }
+       }
 
       const letterSpacing = node.letterSpacing as LetterSpacing
       if (letterSpacing.value !== 0) {
