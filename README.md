@@ -72,3 +72,19 @@ export type Tag = {
   children: Tag[]
 }
 ```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+### Third-Party Dependencies
+
+This project uses 958 third-party open source packages. For a comprehensive list of all dependencies and their licenses, see [LICENSES.md](LICENSES.md).
+
+**License Distribution:**
+- MIT: 813 packages
+- ISC: 72 packages
+- BSD-2-Clause: 26 packages
+- BSD-3-Clause: 23 packages
+- Apache-2.0: 12 packages
+- Other permissive licenses: 12 packages
